@@ -1,0 +1,21 @@
+.footer {
+    background-color: var(--primary);
+    width: 100%;
+    color: var(--white);
+}
+
+.logo-normal {
+    display: block;
+}
+
+.logo-hover {
+    display: none;
+}
+
+.logo:hover .logo-normal {
+    display: none;
+}
+
+.logo:hover .logo-hover {
+    display: block;
+}

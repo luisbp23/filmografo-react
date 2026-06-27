@@ -1,0 +1,48 @@
+.header {
+    background-color: var(--primary);
+    width: 100%;
+    color: var(--white);
+}
+
+.logo-normal {
+    display: block;
+}
+
+.logo-hover {
+    display: none;
+}
+
+.logo:hover .logo-normal {
+    display: none;
+}
+
+.logo:hover .logo-hover {
+    display: block;
+}
+
+.search-bar {
+    background-color: var(--white);
+    border-radius: 25px;
+    padding: 6px 16px;
+    gap: 8px;
+    max-width: 60%;
+    color: var(--dark-gray);
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: var(--font-text);
+    font-size: 20px;
+}
+
+.header-icons {
+    color: var(--secondary);
+    cursor: pointer;
+    padding-right: 20px;
+}
+
+.header-icons svg:hover {
+    color: var(--highlight);
+}

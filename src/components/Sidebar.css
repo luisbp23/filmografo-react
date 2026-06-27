@@ -1,0 +1,45 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(106, 44, 112, 0.4);
+  gap: 8px;
+  min-height: 100%;
+  width: 225px;
+  padding-top: 40px;
+}
+
+.icon {
+    height: 55px;
+    width: 55px;
+}
+
+.icon-person {
+    height: 47px;
+    width: 47px;
+}
+
+.sidebar-icon {
+    height: 45px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: var(--dark-gray);
+  text-decoration: none;
+  font-size: 28px;
+}
+
+.sidebar-item:hover {
+  color: var(--highlight);
+}
+
+.sidebar-item.active {
+  border-left-color: var(--primary);
+  border-left-style: solid;
+  border-left-width: 25px;
+  background-color: white;
+  color: var(--dark-gray);
+}
