@@ -17,4 +17,4 @@ O repositório contém o código da aplicação web.
 
 ## Chaves de API
 
-Adicionar as chaves das APIs num ficheiro `.env` na raíz do projeto de acordo com o ficheiro `apikeys.env.example`.
+Adicionar as chaves das APIs num ficheiro `.env` na raíz do projeto de acordo com o ficheiro `.env.example`.
