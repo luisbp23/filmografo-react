@@ -1,0 +1,14 @@
+.home {
+    padding: 8px; 
+}
+
+.cards-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 8px;
+}
+
+.title {
+    color: var(--secondary);
+}

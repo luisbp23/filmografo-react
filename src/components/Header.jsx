@@ -5,7 +5,7 @@ function Header() {
     return (
         <div className="d-flex align-items-center justify-content-between px-3 py-2 header">
             
-            <Link to="/home" className='logo'>
+            <Link to="/" className='logo'>
                 <img className='logo-normal' src="flogo.png" alt="logótipo" height="96" />
                 <img className='logo-hover' src="flogo_amarelo.png" alt="logótipo" height="96" />
             </Link>
