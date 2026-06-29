@@ -1,0 +1,138 @@
+.pesquisa-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 32px 32px 48px 32px;
+}
+
+.pesquisa-header h1 {
+    font-family: var(--font-title);
+    color: var(--secondary);
+    margin-bottom: 8px;
+}
+
+.pesquisa-header p {
+    color: var(--dark-gray);
+    font-family: var(--font-text);
+}
+
+.pesquisa-filtros {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+}
+
+.pesquisa-filtros button {
+    border: 2px solid var(--primary);
+    background-color: var(--white);
+    color: var(--primary);
+    border-radius: 24px;
+    padding: 8px 22px;
+    font-family: var(--font-text);
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.pesquisa-filtros button:hover {
+    background-color: rgba(106, 44, 112, 0.12);
+}
+
+.pesquisa-filtros button.active {
+    background-color: var(--primary);
+    color: var(--highlight);
+}
+
+.pesquisa-resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resultado-card {
+    display: flex;
+    gap: 22px;
+    text-decoration: none;
+    color: var(--dark-gray);
+    background-color: var(--white);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    transition: 0.2s ease;
+}
+
+.resultado-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+    color: var(--dark-gray);
+}
+
+.resultado-imagem-wrapper {
+    width: 110px;
+    min-width: 110px;
+    height: 165px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgba(106, 44, 112, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultado-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.resultado-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.resultado-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.resultado-topo h2 {
+    margin: 0;
+    font-family: var(--font-text);
+    font-size: 22px;
+    color: var(--dark-gray);
+}
+
+.resultado-topo span {
+    background-color: var(--primary);
+    color: var(--highlight);
+    border-radius: 18px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.resultado-data {
+    margin: 8px 0;
+    color: rgba(57, 57, 57, 0.7);
+    font-size: 14px;
+}
+
+.resultado-descricao {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--dark-gray);
+}
+
+.pesquisa-info {
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.pesquisa-error {
+    color: var(--secondary);
+    font-weight: 700;
+}

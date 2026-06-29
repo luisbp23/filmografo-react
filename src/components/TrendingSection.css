@@ -1,0 +1,106 @@
+.trending-section {
+    position: relative;
+    margin-top: 32px;
+    width: 100%;
+    padding: 24px;
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.trending-section::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 76px;
+    height: 170px;
+    background: linear-gradient(
+        90deg,
+        rgba(106, 44, 112, 0.12),
+        rgba(240, 138, 93, 0.13)
+    );
+    border-radius: 22px;
+    z-index: 0;
+}
+
+.trending-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+.trending-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.trending-header h2 {
+    font-family: var(--font-title);
+    color: var(--secondary);
+    margin: 0;
+    font-size: 32px;
+}
+
+.trending-tabs {
+    display: flex;
+    border: 2px solid var(--primary);
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: var(--white);
+}
+
+.trending-tabs button {
+    border: none;
+    background-color: transparent;
+    color: var(--primary);
+    padding: 8px 28px;
+    font-family: var(--font-text);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.trending-tabs button:hover {
+    background-color: rgba(106, 44, 112, 0.12);
+}
+
+.trending-tabs button.active {
+    background-color: var(--primary);
+    color: var(--highlight);
+    border-radius: 24px;
+}
+
+.trending-tabs button.active:hover {
+    background-color: var(--primary);
+}
+
+.trending-cards {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 18px;
+    width: 100%;
+    scroll-behavior: smooth;
+}
+
+.trending-cards::-webkit-scrollbar {
+    height: 9px;
+}
+
+.trending-cards::-webkit-scrollbar-track {
+    background: rgba(106, 44, 112, 0.18);
+    border-radius: 20px;
+}
+
+.trending-cards::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 20px;
+}
+
+.trending-error {
+    color: var(--secondary);
+    font-weight: 700;
+    margin-top: 16px;
+}

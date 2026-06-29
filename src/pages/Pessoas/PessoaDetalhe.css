@@ -1,11 +1,11 @@
-.filme-detalhe-page {
+.pessoa-detalhe-page {
     width: 100%;
     max-width: 1250px;
     margin: 0 auto;
     padding: 32px 32px 56px 32px;
 }
 
-.filme-voltar-btn {
+.pessoa-voltar-btn {
     border: 2px solid var(--primary);
     background-color: var(--white);
     color: var(--primary);
@@ -18,19 +18,19 @@
     transition: 0.2s ease;
 }
 
-.filme-voltar-btn:hover {
+.pessoa-voltar-btn:hover {
     background-color: var(--primary);
     color: var(--highlight);
 }
 
-.filme-resumo {
+.pessoa-resumo {
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 32px;
     align-items: start;
 }
 
-.filme-poster-wrapper {
+.pessoa-foto-wrapper {
     width: 260px;
     border-radius: 14px;
     overflow: hidden;
@@ -38,170 +38,149 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.filme-poster {
+.pessoa-foto {
     width: 100%;
     display: block;
 }
 
-.filme-info-principal {
+.pessoa-info-principal {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.filme-titulo {
+.pessoa-nome {
     margin: 0;
     font-family: var(--font-title);
     font-size: 36px;
     color: var(--secondary);
 }
 
-.filme-titulo span {
-    color: var(--dark-gray);
-    font-size: 28px;
-}
-
-.filme-meta {
+.pessoa-meta {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.filme-meta p {
+.pessoa-meta p {
     margin: 0;
     font-family: var(--font-text);
     color: var(--dark-gray);
     line-height: 1.5;
 }
 
-.filme-sinopse h2,
-.filme-section h2 {
+.pessoa-biografia h2,
+.pessoa-section h2 {
     font-family: var(--font-title);
     color: var(--secondary);
     margin: 0 0 12px 0;
 }
 
-.filme-sinopse p {
+.pessoa-biografia p {
     margin: 0;
     line-height: 1.7;
     color: var(--dark-gray);
 }
 
-.filme-section {
+.pessoa-section {
     margin-top: 42px;
 }
 
-.elenco-horizontal {
+.trabalhos-horizontal {
     display: flex;
     gap: 18px;
     overflow-x: auto;
     padding-bottom: 16px;
 }
 
-.elenco-horizontal::-webkit-scrollbar {
+.trabalhos-horizontal::-webkit-scrollbar {
     height: 9px;
 }
 
-.elenco-horizontal::-webkit-scrollbar-track {
+.trabalhos-horizontal::-webkit-scrollbar-track {
     background: rgba(106, 44, 112, 0.18);
     border-radius: 20px;
 }
 
-.elenco-horizontal::-webkit-scrollbar-thumb {
+.trabalhos-horizontal::-webkit-scrollbar-thumb {
     background: var(--secondary);
     border-radius: 20px;
 }
 
-.ator-card-horizontal {
-    min-width: 150px;
-    max-width: 150px;
-    background-color: var(--white);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+.trabalho-card {
+    width: 155px;
+    min-width: 155px;
+    max-width: 155px;
+    text-decoration: none;
+    color: var(--dark-gray);
     flex-shrink: 0;
 }
 
-.ator-foto-wrapper-horizontal {
-    width: 150px;
-    height: 200px;
-    background-color: rgba(106, 44, 112, 0.15);
-}
-
-.ator-foto-horizontal {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.ator-info-horizontal {
-    padding: 12px;
-}
-
-.ator-info-horizontal h3 {
-    margin: 0 0 6px 0;
-    font-size: 15px;
+.trabalho-card:hover {
     color: var(--dark-gray);
 }
 
-.ator-info-horizontal p {
-    margin: 0;
-    font-size: 13px;
-    color: rgba(57, 57, 57, 0.75);
-    line-height: 1.4;
-}
-
-.trailer-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 850px;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
+.trabalho-poster-wrapper {
+    width: 155px;
+    height: 232px;
+    border-radius: 10px;
     overflow: hidden;
-    background-color: #000000;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    background-color: #eeeeee;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
-.trailer-wrapper iframe {
+.trabalho-poster {
     width: 100%;
     height: 100%;
-    border: none;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.2s ease;
 }
 
-.filme-status {
+.trabalho-card:hover .trabalho-poster {
+    transform: scale(1.04);
+}
+
+.trabalho-info {
+    padding-top: 10px;
+}
+
+.trabalho-info h3 {
+    margin: 0 0 4px 0;
+    font-family: var(--font-text);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--dark-gray);
+}
+
+.trabalho-info p {
+    margin: 0;
+    font-family: var(--font-text);
+    font-size: 13px;
+    color: rgba(57, 57, 57, 0.75);
+}
+
+.pessoa-status {
     color: var(--dark-gray);
     font-weight: 600;
 }
 
-.filme-erro {
+.pessoa-erro {
     color: var(--secondary);
     font-weight: 700;
 }
 
 @media (max-width: 850px) {
-    .filme-resumo {
+    .pessoa-resumo {
         grid-template-columns: 1fr;
     }
 
-    .filme-poster-wrapper {
+    .pessoa-foto-wrapper {
         width: 220px;
     }
 
-    .filme-titulo {
+    .pessoa-nome {
         font-size: 30px;
     }
-
-    .filme-titulo span {
-        font-size: 22px;
-    }
-}
-
-.ator-card-horizontal {
-    text-decoration: none;
-    color: var(--dark-gray);
-}
-
-.ator-card-horizontal:hover {
-    color: var(--dark-gray);
-    transform: translateY(-3px);
 }

@@ -1,45 +1,34 @@
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(106, 44, 112, 0.4);
-  gap: 8px;
-  min-height: 100%;
-  width: 225px;
-  padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(106, 44, 112, 0.4);
+    gap: 18px;
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    padding-top: 45px;
 }
 
-.icon {
-    height: 55px;
-    width: 55px;
+.sidebar-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--dark-gray);
+    font-family: var(--font-title);
+    font-size: 22px;
+    padding: 8px 18px;
+    transition: 0.2s ease;
 }
 
-.icon-person {
-    height: 47px;
-    width: 47px;
+.sidebar-option svg {
+    color: var(--dark-gray);
+    flex-shrink: 0;
 }
 
-.sidebar-icon {
-    height: 45px;
+.sidebar-option:hover {
+    color: var(--highlight);
 }
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  color: var(--dark-gray);
-  text-decoration: none;
-  font-size: 28px;
-}
-
-.sidebar-item:hover {
-  color: var(--highlight);
-}
-
-.sidebar-item.active {
-  border-left-color: var(--primary);
-  border-left-style: solid;
-  border-left-width: 25px;
-  background-color: white;
-  color: var(--dark-gray);
+.sidebar-option:hover svg {
+    color: var(--highlight);
 }

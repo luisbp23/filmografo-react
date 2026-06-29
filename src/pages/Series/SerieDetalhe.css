@@ -1,11 +1,11 @@
-.filme-detalhe-page {
+.serie-detalhe-page {
     width: 100%;
     max-width: 1250px;
     margin: 0 auto;
     padding: 32px 32px 56px 32px;
 }
 
-.filme-voltar-btn {
+.serie-voltar-btn {
     border: 2px solid var(--primary);
     background-color: var(--white);
     color: var(--primary);
@@ -18,19 +18,19 @@
     transition: 0.2s ease;
 }
 
-.filme-voltar-btn:hover {
+.serie-voltar-btn:hover {
     background-color: var(--primary);
     color: var(--highlight);
 }
 
-.filme-resumo {
+.serie-resumo {
     display: grid;
     grid-template-columns: 260px 1fr;
     gap: 32px;
     align-items: start;
 }
 
-.filme-poster-wrapper {
+.serie-poster-wrapper {
     width: 260px;
     border-radius: 14px;
     overflow: hidden;
@@ -38,56 +38,56 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.filme-poster {
+.serie-poster {
     width: 100%;
     display: block;
 }
 
-.filme-info-principal {
+.serie-info-principal {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.filme-titulo {
+.serie-titulo {
     margin: 0;
     font-family: var(--font-title);
     font-size: 36px;
     color: var(--secondary);
 }
 
-.filme-titulo span {
+.serie-titulo span {
     color: var(--dark-gray);
     font-size: 28px;
 }
 
-.filme-meta {
+.serie-meta {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.filme-meta p {
+.serie-meta p {
     margin: 0;
     font-family: var(--font-text);
     color: var(--dark-gray);
     line-height: 1.5;
 }
 
-.filme-sinopse h2,
-.filme-section h2 {
+.serie-sinopse h2,
+.serie-section h2 {
     font-family: var(--font-title);
     color: var(--secondary);
     margin: 0 0 12px 0;
 }
 
-.filme-sinopse p {
+.serie-sinopse p {
     margin: 0;
     line-height: 1.7;
     color: var(--dark-gray);
 }
 
-.filme-section {
+.serie-section {
     margin-top: 42px;
 }
 
@@ -168,30 +168,30 @@
     border: none;
 }
 
-.filme-status {
+.serie-status {
     color: var(--dark-gray);
     font-weight: 600;
 }
 
-.filme-erro {
+.serie-erro {
     color: var(--secondary);
     font-weight: 700;
 }
 
 @media (max-width: 850px) {
-    .filme-resumo {
+    .serie-resumo {
         grid-template-columns: 1fr;
     }
 
-    .filme-poster-wrapper {
+    .serie-poster-wrapper {
         width: 220px;
     }
 
-    .filme-titulo {
+    .serie-titulo {
         font-size: 30px;
     }
 
-    .filme-titulo span {
+    .serie-titulo span {
         font-size: 22px;
     }
 }

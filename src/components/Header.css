@@ -2,22 +2,61 @@
     background-color: var(--primary);
     width: 100%;
     color: var(--white);
+    display: flex;
+    align-items: stretch;
+    min-height: 110px;
 }
 
-.logo-normal {
+.header-brand {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 12px;
+    text-decoration: none;
+    color: var(--highlight);
+}
+
+.header-brand-text {
+    font-family: var(--font-title);
+    font-size: 19px;
+    letter-spacing: 0.5px;
+    color: var(--highlight);
+    white-space: nowrap;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.brand-logo-normal {
     display: block;
+    height: 46px;
 }
 
-.logo-hover {
+.brand-logo-hover {
+    display: none;
+    height: 46px;
+}
+
+.header-brand:hover .brand-logo-normal {
     display: none;
 }
 
-.logo:hover .logo-normal {
-    display: none;
+.header-brand:hover .brand-logo-hover {
+    display: block;
 }
 
-.logo:hover .logo-hover {
-    display: block;
+.header-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 0 28px;
 }
 
 .search-bar {
@@ -25,8 +64,26 @@
     border-radius: 25px;
     padding: 6px 16px;
     gap: 8px;
-    max-width: 60%;
     color: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 900px;
+}
+
+.search-icon-button {
+    border: none;
+    background: transparent;
+    color: var(--dark-gray);
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon-button:hover {
+    color: var(--secondary);
 }
 
 .search-bar input {
@@ -34,13 +91,19 @@
     outline: none;
     width: 100%;
     font-family: var(--font-text);
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .header-icons {
     color: var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-shrink: 0;
+}
+
+.header-icons svg {
     cursor: pointer;
-    padding-right: 20px;
 }
 
 .header-icons svg:hover {

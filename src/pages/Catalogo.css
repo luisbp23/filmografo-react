@@ -1,0 +1,28 @@
+.catalogo-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 32px 32px 56px 32px;
+}
+
+.catalogo-page h1 {
+    font-family: var(--font-title);
+    color: var(--secondary);
+    margin-bottom: 8px;
+}
+
+.catalogo-page p {
+    color: var(--dark-gray);
+}
+
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 155px));
+    gap: 24px 18px;
+    margin-top: 28px;
+}
+
+.catalogo-status {
+    color: var(--dark-gray);
+    font-weight: 600;
+}

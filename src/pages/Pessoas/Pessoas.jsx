@@ -1,46 +1,46 @@
 import { useEffect, useState } from 'react';
 import Card from '../../components/Card';
-import { getFilmesPopulares } from '../../services/tmdb';
+import { getPessoasPopulares } from '../../services/tmdb';
 import { useLanguage } from '../../i18n/LanguageContext';
 import '../Catalogo.css';
 
-function Filmes() {
-    const [filmes, setFilmes] = useState([]);
+function Pessoas() {
+    const [pessoas, setPessoas] = useState([]);
     const [loading, setLoading] = useState(true);
     const { t, language } = useLanguage();
 
     useEffect(() => {
-        async function carregarFilmes() {
+        async function carregarPessoas() {
             setLoading(true);
-            const dados = await getFilmesPopulares();
-            setFilmes(dados || []);
+            const dados = await getPessoasPopulares();
+            setPessoas(dados || []);
             setLoading(false);
         }
 
-        carregarFilmes();
+        carregarPessoas();
     }, [language]);
 
     return (
         <div className="catalogo-page">
-            <h1>{t('movies')}</h1>
+            <h1>{t('people')}</h1>
             <p>{t('popular')}</p>
 
             {loading ? (
                 <p className="catalogo-status">{t('loading')}</p>
             ) : (
                 <div className="catalogo-grid">
-                    {filmes.map((filme) => (
+                    {pessoas.map((pessoa) => (
                         <Card
-                            key={filme.id}
-                            id={filme.id}
-                            titulo={filme.title}
+                            key={pessoa.id}
+                            id={pessoa.id}
+                            titulo={pessoa.name}
                             imagem={
-                                filme.poster_path
-                                    ? `https://image.tmdb.org/t/p/w185${filme.poster_path}`
+                                pessoa.profile_path
+                                    ? `https://image.tmdb.org/t/p/w185${pessoa.profile_path}`
                                     : '/flogo.png'
                             }
-                            date={filme.release_date}
-                            link={`/filmes/${filme.id}`}
+                            subtitulo={pessoa.known_for_department}
+                            link={`/pessoas/${pessoa.id}`}
                         />
                     ))}
                 </div>
@@ -49,4 +49,4 @@ function Filmes() {
     );
 }
 
-export default Filmes;
+export default Pessoas;

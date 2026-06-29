@@ -1,0 +1,37 @@
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.language-button {
+    width: 46px;
+    height: 46px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.language-button img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.language-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.08);
+}
+
+.language-button.active {
+    border-color: var(--highlight);
+    background-color: rgba(255, 255, 255, 0.2);
+}

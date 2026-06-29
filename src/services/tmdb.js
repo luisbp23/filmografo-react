@@ -1,38 +1,98 @@
 const BASE_URL = process.env.REACT_APP_TMDB_URL;
 const API_KEY = process.env.REACT_APP_TMDB_KEY;
 
-export async function getGeneros() {
-  const resposta = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados.genres;
+function getApiLanguage() {
+    const language = localStorage.getItem('filmografo-language') || 'pt';
+    return language === 'en' ? 'en-US' : 'pt-PT';
 }
 
-export async function getFilmesTendenciasHoje() {
-  const resposta = await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados.results;
-}
+async function fetchTMDB(endpoint, params = {}, returnsResults = true) {
+    if (!BASE_URL || !API_KEY) {
+        console.error("Erro: variáveis de ambiente TMDB não configuradas.");
+        return returnsResults ? [] : null;
+    }
 
-export async function getFilmesTendenciasSemana() {
-  const resposta = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados.results;
+    try {
+        const queryParams = new URLSearchParams({
+            api_key: API_KEY,
+            language: getApiLanguage(),
+            ...params
+        });
+
+        const url = `${BASE_URL}${endpoint}?${queryParams.toString()}`;
+
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            console.error("Erro da API TMDB:", dados);
+            return returnsResults ? [] : null;
+        }
+
+        return returnsResults ? dados.results || [] : dados;
+    } catch (erro) {
+        console.error("Erro ao ligar à TMDB:", erro);
+        return returnsResults ? [] : null;
+    }
 }
 
 export async function getFilmesPopulares() {
-  const resposta = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados.results;
+    return fetchTMDB('/movie/popular');
 }
 
 export async function getSeriesPopulares() {
-  const resposta = await fetch(`${BASE_URL}/tv/popular?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados.results;
+    return fetchTMDB('/tv/popular');
+}
+
+export async function getPessoasPopulares() {
+    return fetchTMDB('/person/popular');
+}
+
+export async function getFilmesTendenciasHoje() {
+    return fetchTMDB('/trending/movie/day');
+}
+
+export async function getFilmesTendenciasSemana() {
+    return fetchTMDB('/trending/movie/week');
+}
+
+export async function pesquisarConteudo(termo) {
+    if (!termo || termo.trim() === '') {
+        return [];
+    }
+
+    return fetchTMDB('/search/multi', {
+        query: termo.trim(),
+        include_adult: 'false'
+    });
 }
 
 export async function getFilmeDetalhe(id) {
-  const resposta = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=pt-PT`);
-  const dados = await resposta.json();
-  return dados;
+    return fetchTMDB(
+        `/movie/${id}`,
+        {
+            append_to_response: 'credits,videos'
+        },
+        false
+    );
+}
+
+export async function getSerieDetalhe(id) {
+    return fetchTMDB(
+        `/tv/${id}`,
+        {
+            append_to_response: 'credits,videos'
+        },
+        false
+    );
+}
+
+export async function getPessoaDetalhe(id) {
+    return fetchTMDB(
+        `/person/${id}`,
+        {
+            append_to_response: 'combined_credits'
+        },
+        false
+    );
 }

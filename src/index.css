@@ -8,6 +8,7 @@
   --highlight: #F9ED69;
   --dark-gray: #393939;
   --white: #ffffff;
+  --sidebar-width: 225px;
 }
 
 h1, h2, h3 {
@@ -15,7 +16,8 @@ h1, h2, h3 {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    font-family: var(--font-text);
 }
 
 code {

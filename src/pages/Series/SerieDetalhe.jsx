@@ -1,69 +1,69 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getFilmeDetalhe } from '../../services/tmdb';
+import { getSerieDetalhe } from '../../services/tmdb';
 import { useLanguage } from '../../i18n/LanguageContext';
-import './FilmeDetalhe.css';
+import './SerieDetalhe.css';
 
-function FilmeDetalhe() {
+function SerieDetalhe() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { t, language, locale } = useLanguage();
 
-    const [filme, setFilme] = useState(null);
+    const [serie, setSerie] = useState(null);
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState('');
 
     useEffect(() => {
-        async function carregarFilme() {
+        async function carregarSerie() {
             try {
                 setLoading(true);
                 setErro('');
 
-                const dados = await getFilmeDetalhe(id);
+                const dados = await getSerieDetalhe(id);
 
                 if (!dados) {
                     setErro(t('noResults'));
                     return;
                 }
 
-                setFilme(dados);
+                setSerie(dados);
             } catch (error) {
-                console.error('Erro ao carregar detalhe do filme:', error);
+                console.error('Erro ao carregar detalhe da série:', error);
                 setErro(t('noResults'));
             } finally {
                 setLoading(false);
             }
         }
 
-        carregarFilme();
+        carregarSerie();
     }, [id, language, t]);
 
     const trailer = useMemo(() => {
-        if (!filme?.videos?.results) {
+        if (!serie?.videos?.results) {
             return null;
         }
 
-        return filme.videos.results.find(
+        return serie.videos.results.find(
             (video) => video.site === 'YouTube' && video.type === 'Trailer'
         );
-    }, [filme]);
+    }, [serie]);
 
     if (loading) {
         return (
-            <div className="filme-detalhe-page">
-                <p className="filme-status">{t('loading')}</p>
+            <div className="serie-detalhe-page">
+                <p className="serie-status">{t('loading')}</p>
             </div>
         );
     }
 
     if (erro) {
         return (
-            <div className="filme-detalhe-page">
-                <p className="filme-erro">{erro}</p>
+            <div className="serie-detalhe-page">
+                <p className="serie-erro">{erro}</p>
 
                 <button
                     type="button"
-                    className="filme-voltar-btn"
+                    className="serie-voltar-btn"
                     onClick={() => navigate(-1)}
                 >
                     {t('back')}
@@ -72,86 +72,88 @@ function FilmeDetalhe() {
         );
     }
 
-    if (!filme) {
+    if (!serie) {
         return null;
     }
 
-    const poster = filme.poster_path
-        ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
+    const poster = serie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${serie.poster_path}`
         : '/flogo.png';
 
-    const ano = filme.release_date
-        ? new Date(filme.release_date).getFullYear()
+    const ano = serie.first_air_date
+        ? new Date(serie.first_air_date).getFullYear()
         : '';
 
-    const dataFormatada = filme.release_date
-        ? new Date(filme.release_date).toLocaleDateString(locale, {
+    const dataFormatada = serie.first_air_date
+        ? new Date(serie.first_air_date).toLocaleDateString(locale, {
               day: 'numeric',
               month: 'long',
               year: 'numeric'
           })
         : t('unknownDate');
 
-    const duracao = filme.runtime
-        ? `${Math.floor(filme.runtime / 60)}h ${filme.runtime % 60}min`
-        : t('unknownDuration');
-
-    const avaliacao = filme.vote_average
-        ? filme.vote_average.toFixed(1)
-        : 'N/A';
-
     const generos =
-        filme.genres?.length > 0
-            ? filme.genres.map((genero) => genero.name).join(', ')
+        serie.genres?.length > 0
+            ? serie.genres.map((genero) => genero.name).join(', ')
             : t('unknownGenre');
 
-    const elenco = filme.credits?.cast?.slice(0, 10) || [];
+    const avaliacao = serie.vote_average
+        ? serie.vote_average.toFixed(1)
+        : 'N/A';
+
+    const estado = serie.status || '—';
+    const temporadas = serie.number_of_seasons || 0;
+    const episodios = serie.number_of_episodes || 0;
+
+    const elenco = serie.credits?.cast?.slice(0, 10) || [];
 
     return (
-        <div className="filme-detalhe-page">
+        <div className="serie-detalhe-page">
             <button
                 type="button"
-                className="filme-voltar-btn"
+                className="serie-voltar-btn"
                 onClick={() => navigate(-1)}
             >
                 ← {t('back')}
             </button>
 
-            <section className="filme-resumo">
-                <div className="filme-poster-wrapper">
+            <section className="serie-resumo">
+                <div className="serie-poster-wrapper">
                     <img
                         src={poster}
-                        alt={`Poster de ${filme.title}`}
-                        className="filme-poster"
+                        alt={`Poster de ${serie.name}`}
+                        className="serie-poster"
                     />
                 </div>
 
-                <div className="filme-info-principal">
-                    <h1 className="filme-titulo">
-                        {filme.title} {ano && <span>({ano})</span>}
+                <div className="serie-info-principal">
+                    <h1 className="serie-titulo">
+                        {serie.name} {ano && <span>({ano})</span>}
                     </h1>
 
-                    <div className="filme-meta">
-                        <p><strong>{t('releaseDate')}:</strong> {dataFormatada}</p>
-                        <p><strong>{t('duration')}:</strong> {duracao}</p>
+                    <div className="serie-meta">
+                        <p><strong>{t('firstAirDate')}:</strong> {dataFormatada}</p>
+                        <p><strong>{t('status')}:</strong> {estado}</p>
+                        <p><strong>{t('seasons')}:</strong> {temporadas}</p>
+                        <p><strong>{t('episodes')}:</strong> {episodios}</p>
                         <p><strong>{t('genres')}:</strong> {generos}</p>
                         <p><strong>{t('tmdbRating')}:</strong> {avaliacao}/10</p>
                     </div>
 
-                    <div className="filme-sinopse">
+                    <div className="serie-sinopse">
                         <h2>{t('synopsis')}</h2>
                         <p>
-                            {filme.overview || t('noSynopsisMovie')}
+                            {serie.overview || t('noSynopsisSeries')}
                         </p>
                     </div>
                 </div>
             </section>
 
-            <section className="filme-section">
+            <section className="serie-section">
                 <h2>{t('actors')}</h2>
 
                 {elenco.length === 0 ? (
-                    <p className="filme-status">{t('noCast')}</p>
+                    <p className="serie-status">{t('noCast')}</p>
                 ) : (
                     <div className="elenco-horizontal">
                         {elenco.map((ator) => (
@@ -182,24 +184,24 @@ function FilmeDetalhe() {
                 )}
             </section>
 
-            <section className="filme-section">
+            <section className="serie-section">
                 <h2>{t('trailer')}</h2>
 
                 {trailer ? (
                     <div className="trailer-wrapper">
                         <iframe
                             src={`https://www.youtube.com/embed/${trailer.key}`}
-                            title={`${t('trailer')} ${filme.title}`}
+                            title={`${t('trailer')} ${serie.name}`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         />
                     </div>
                 ) : (
-                    <p className="filme-status">{t('noTrailer')}</p>
+                    <p className="serie-status">{t('noTrailer')}</p>
                 )}
             </section>
         </div>
     );
 }
 
-export default FilmeDetalhe;
+export default SerieDetalhe;
