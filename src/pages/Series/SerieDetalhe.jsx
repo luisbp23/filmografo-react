@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSerieDetalhe } from '../../services/tmdb';
 import { useLanguage } from '../../i18n/LanguageContext';
 import './SerieDetalhe.css';
+import ReviewForm from '../../components/ReviewForm';
+import ReviewCard from '../../components/ReviewCard';
 
 function SerieDetalhe() {
     const { id } = useParams();
@@ -107,6 +109,10 @@ function SerieDetalhe() {
 
     const elenco = serie.credits?.cast?.slice(0, 10) || [];
 
+    function enviarCritica(dados) {
+        console.log(dados);
+    }
+
     return (
         <div className="serie-detalhe-page">
             <button
@@ -199,6 +205,19 @@ function SerieDetalhe() {
                 ) : (
                     <p className="serie-status">{t('noTrailer')}</p>
                 )}
+            </section>
+
+            <section className='reviews-section'>
+                <h2>Avaliações</h2>
+                <ReviewForm onSubmit={enviarCritica} />
+
+                <h3 className='user-aval'>Avaliações dos Utilizadores</h3>
+                <ReviewCard
+                    titulo="Um clássico absoluto"
+                    autor="joaosilva22"
+                    texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    nota={8}
+                />
             </section>
         </div>
     );

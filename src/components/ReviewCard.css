@@ -1,0 +1,51 @@
+.review-card {
+    background-color: #e9e9e9;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 12px;
+}
+
+.review-card .link-autor {
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.review-card .link-autor:hover {
+    text-decoration: underline;
+}
+
+.review-card .icone-denunciar {
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 45px;
+    height: 45px;
+    color: var(--secondary);
+}
+
+.review-card .icone-denunciar:hover {
+    color: var(--primary);
+}
+
+.review-card .texto-critica {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: var(--font-text);
+    color: var(--dark-gray);
+    flex-grow: 1;
+}
+
+.review-card .circulo-nota {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--dark-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--secondary);
+    font-size: larger;
+}

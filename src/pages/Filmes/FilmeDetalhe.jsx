@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getFilmeDetalhe } from '../../services/tmdb';
 import { useLanguage } from '../../i18n/LanguageContext';
 import './FilmeDetalhe.css';
+import ReviewForm from '../../components/ReviewForm';
+import ReviewCard from '../../components/ReviewCard';
 
 function FilmeDetalhe() {
     const { id } = useParams();
@@ -107,6 +109,10 @@ function FilmeDetalhe() {
 
     const elenco = filme.credits?.cast?.slice(0, 10) || [];
 
+    function enviarCritica(dados) {
+        console.log(dados);
+    }
+
     return (
         <div className="filme-detalhe-page">
             <button
@@ -198,6 +204,20 @@ function FilmeDetalhe() {
                     <p className="filme-status">{t('noTrailer')}</p>
                 )}
             </section>
+
+            <section className='reviews-section'>
+                <h2>Avaliações</h2>
+                <ReviewForm onSubmit={enviarCritica} />
+
+                <h3 className='user-aval'>Avaliações dos Utilizadores</h3>
+                <ReviewCard
+                    titulo="Um clássico absoluto"
+                    autor="joaosilva22"
+                    texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    nota={8}
+                />
+            </section>
+
         </div>
     );
 }

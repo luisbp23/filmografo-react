@@ -16,12 +16,11 @@ h1, h2, h3 {
 }
 
 body {
-    margin: 0;
-    font-family: var(--font-text);
+  margin: 0;
+  font-family: var(--font-text);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
-
