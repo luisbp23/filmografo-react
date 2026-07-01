@@ -239,13 +239,24 @@
     .serie-detalhe-page {
         padding: 24px 20px 48px 20px;
     }
+}
 
-    .serie-info h1 {
-        font-size: 25px;
-    }
+.serie-info h1 {
+    font-size: 25px;
+}
 
-    .serie-section h2,
-    .serie-sinopse h2 {
-        font-size: 24px;
-    }
+.serie-section h2,
+.serie-sinopse h2 {
+    font-size: 24px;
+}
+
+.ator-card-horizontal:hover {
+    color: var(--dark-gray);
+    transform: translateY(-3px);
+}
+
+.reviews-section h2, .user-aval {
+    font-family: var(--font-title);
+    color: var(--secondary);
+    margin: 24px 0 12px 0;
 }

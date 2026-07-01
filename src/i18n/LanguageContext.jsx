@@ -15,7 +15,7 @@ const translations = {
         today: 'Hoje',
         thisWeek: 'Esta Semana',
         popular: 'Populares',
-        mostViewed: 'Mais vistos de sempre',
+        mostViewed: 'Mais vistos',
 
         // Pesquisa
         searchResults: 'Resultados de pesquisa',

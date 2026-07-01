@@ -1,0 +1,95 @@
+.review-form {
+    background-color: #e9e9e9;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.review-form h3 {
+    color: var(--secondary);
+    font-family: var(--font-title);
+    margin-bottom: 1rem;
+}
+
+.review-form .form-label {
+    font-family: var(--font-text);
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.review-form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.review-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(106, 44, 112, 0.15);
+}
+
+.circulo-nota-grande {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid var(--dark-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary);
+    margin: 8px auto;
+}
+
+.review-form .form-range {
+    width: 130px;
+    height: 1.4rem;
+}
+
+.review-form .form-range::-webkit-slider-runnable-track {
+    background-color: var(--dark-gray);
+    opacity: 0.3;
+    height: 4px;
+    border-radius: 4px;
+}
+
+.review-form .form-range::-moz-range-track {
+    background-color: var(--dark-gray);
+    opacity: 0.3;
+    height: 4px;
+    border-radius: 4px;
+}
+
+.review-form .form-range::-webkit-slider-thumb {
+    background-color: var(--primary);
+}
+
+.review-form .form-range::-moz-range-thumb {
+    background-color: var(--primary);
+}
+
+.review-form .btn-primary {
+    background-color: var(--secondary);
+    border: none;
+    font-family: var(--font-text);
+    font-weight: 600;
+    border-radius: 25px;
+    padding: 8px 28px;
+}
+
+.review-form .btn-primary:hover {
+    background-color: var(--primary);
+    color: var(--highlight);
+}
+
+.circulo-nota-grande {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid var(--dark-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin: 8px auto;
+}

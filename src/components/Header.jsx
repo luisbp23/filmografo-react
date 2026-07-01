@@ -37,13 +37,16 @@ function Header() {
     }, []);
 
     useEffect(() => {
-        if (location.pathname !== '/pesquisa') {
+        if (location.pathname === '/pesquisa') {
+            const query = new URLSearchParams(location.search).get('query') || '';
+            setSearchText(query);
+        } else {
             setSearchText('');
         }
 
         setAddMenuOpen(false);
         setUserMenuOpen(false);
-    }, [location.pathname]);
+    }, [location.pathname, location.search]);
 
     function handleSearchSubmit(event) {
         event.preventDefault();
@@ -119,7 +122,13 @@ function Header() {
                         className="search-icon-button"
                         aria-label={t('searchPlaceholder')}
                     >
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                        >
                             <path
                                 d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
                                 stroke="currentColor"
@@ -153,7 +162,13 @@ function Header() {
                                 aria-controls="add-content-menu"
                                 title={t('addContent')}
                             >
-                                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <svg
+                                    width="56"
+                                    height="56"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
                                     <path
                                         d="M6 12H18M12 6V18"
                                         stroke="currentColor"

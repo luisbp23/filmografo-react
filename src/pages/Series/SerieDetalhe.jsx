@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSerieDetalhe } from '../../services/tmdb';
 import { useLanguage } from '../../i18n/LanguageContext';
 import './SerieDetalhe.css';
+import ReviewForm from '../../components/ReviewForm';
+import ReviewCard from '../../components/ReviewCard';
 
 function SerieDetalhe() {
     const { id } = useParams();
@@ -48,6 +50,10 @@ function SerieDetalhe() {
         );
     }, [serie]);
 
+    function enviarCritica(dados) {
+        console.log(dados);
+    }
+
     if (loading) {
         return (
             <div className="serie-detalhe-page">
@@ -60,6 +66,14 @@ function SerieDetalhe() {
         return (
             <div className="serie-detalhe-page">
                 <p className="serie-erro">{erro}</p>
+
+                <button
+                    type="button"
+                    className="serie-voltar-btn"
+                    onClick={() => navigate(-1)}
+                >
+                    ← {t('back')}
+                </button>
             </div>
         );
     }
@@ -185,10 +199,10 @@ function SerieDetalhe() {
                 )}
             </section>
 
-            {trailer && (
-                <section className="serie-section">
-                    <h2>{t('trailer')}</h2>
+            <section className="serie-section">
+                <h2>{t('trailer')}</h2>
 
+                {trailer ? (
                     <div className="trailer-wrapper">
                         <iframe
                             src={`https://www.youtube.com/embed/${trailer.key}`}
@@ -197,8 +211,25 @@ function SerieDetalhe() {
                             allowFullScreen
                         />
                     </div>
-                </section>
-            )}
+                ) : (
+                    <p className="serie-status">{t('noTrailer')}</p>
+                )}
+            </section>
+
+            <section className="reviews-section">
+                <h2>Avaliações</h2>
+
+                <ReviewForm onSubmit={enviarCritica} />
+
+                <h3 className="user-aval">Avaliações dos Utilizadores</h3>
+
+                <ReviewCard
+                    titulo="Um clássico absoluto"
+                    autor="joaosilva22"
+                    texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    nota={8}
+                />
+            </section>
         </div>
     );
 }
