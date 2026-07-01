@@ -22,14 +22,14 @@ function SerieDetalhe() {
                 const dados = await getSerieDetalhe(id);
 
                 if (!dados) {
-                    setErro(t('noResults'));
+                    setErro(t('seriesDetailsError'));
                     return;
                 }
 
                 setSerie(dados);
             } catch (error) {
                 console.error('Erro ao carregar detalhe da série:', error);
-                setErro(t('noResults'));
+                setErro(t('seriesDetailsError'));
             } finally {
                 setLoading(false);
             }
@@ -60,14 +60,6 @@ function SerieDetalhe() {
         return (
             <div className="serie-detalhe-page">
                 <p className="serie-erro">{erro}</p>
-
-                <button
-                    type="button"
-                    className="serie-voltar-btn"
-                    onClick={() => navigate(-1)}
-                >
-                    {t('back')}
-                </button>
             </div>
         );
     }
@@ -92,65 +84,74 @@ function SerieDetalhe() {
           })
         : t('unknownDate');
 
-    const generos =
-        serie.genres?.length > 0
-            ? serie.genres.map((genero) => genero.name).join(', ')
-            : t('unknownGenre');
-
     const avaliacao = serie.vote_average
         ? serie.vote_average.toFixed(1)
         : 'N/A';
 
-    const estado = serie.status || '—';
-    const temporadas = serie.number_of_seasons || 0;
-    const episodios = serie.number_of_episodes || 0;
-
-    const elenco = serie.credits?.cast?.slice(0, 10) || [];
+    const generos = serie.genres || [];
+    const elenco = serie.credits?.cast?.slice(0, 12) || [];
 
     return (
         <div className="serie-detalhe-page">
-            <button
-                type="button"
-                className="serie-voltar-btn"
-                onClick={() => navigate(-1)}
-            >
-                ← {t('back')}
-            </button>
-
-            <section className="serie-resumo">
+            <section className="serie-layout">
                 <div className="serie-poster-wrapper">
                     <img
                         src={poster}
-                        alt={`Poster de ${serie.name}`}
+                        alt={serie.name}
                         className="serie-poster"
                     />
                 </div>
 
-                <div className="serie-info-principal">
-                    <h1 className="serie-titulo">
+                <div className="serie-info">
+                    <button
+                        type="button"
+                        className="serie-voltar-btn"
+                        onClick={() => navigate(-1)}
+                    >
+                        ← {t('back')}
+                    </button>
+
+                    <h1>
                         {serie.name} {ano && <span>({ano})</span>}
                     </h1>
 
-                    <div className="serie-meta">
-                        <p><strong>{t('firstAirDate')}:</strong> {dataFormatada}</p>
-                        <p><strong>{t('status')}:</strong> {estado}</p>
-                        <p><strong>{t('seasons')}:</strong> {temporadas}</p>
-                        <p><strong>{t('episodes')}:</strong> {episodios}</p>
-                        <p><strong>{t('genres')}:</strong> {generos}</p>
-                        <p><strong>{t('tmdbRating')}:</strong> {avaliacao}/10</p>
+                    <div className="serie-generos">
+                        {generos.map((genero) => (
+                            <span key={genero.id}>{genero.name}</span>
+                        ))}
                     </div>
 
                     <div className="serie-sinopse">
                         <h2>{t('synopsis')}</h2>
+                        <p>{serie.overview || t('noSynopsisSeries')}</p>
+                    </div>
+
+                    <div className="serie-dados">
                         <p>
-                            {serie.overview || t('noSynopsisSeries')}
+                            <strong>{t('firstAirDate')}:</strong> {dataFormatada}
+                        </p>
+
+                        <p>
+                            <strong>{t('status')}:</strong> {serie.status || t('unknownInfo')}
+                        </p>
+
+                        <p>
+                            <strong>{t('seasons')}:</strong> {serie.number_of_seasons || 0}
+                        </p>
+
+                        <p>
+                            <strong>{t('episodes')}:</strong> {serie.number_of_episodes || 0}
+                        </p>
+
+                        <p>
+                            <strong>{t('tmdbRating')}:</strong> ⭐ {avaliacao}/10
                         </p>
                     </div>
                 </div>
             </section>
 
             <section className="serie-section">
-                <h2>{t('actors')}</h2>
+                <h2>{t('mainCast')}</h2>
 
                 {elenco.length === 0 ? (
                     <p className="serie-status">{t('noCast')}</p>
@@ -184,10 +185,10 @@ function SerieDetalhe() {
                 )}
             </section>
 
-            <section className="serie-section">
-                <h2>{t('trailer')}</h2>
+            {trailer && (
+                <section className="serie-section">
+                    <h2>{t('trailer')}</h2>
 
-                {trailer ? (
                     <div className="trailer-wrapper">
                         <iframe
                             src={`https://www.youtube.com/embed/${trailer.key}`}
@@ -196,10 +197,8 @@ function SerieDetalhe() {
                             allowFullScreen
                         />
                     </div>
-                ) : (
-                    <p className="serie-status">{t('noTrailer')}</p>
-                )}
-            </section>
+                </section>
+            )}
         </div>
     );
 }

@@ -11,6 +11,11 @@ import FilmeDetalhe from './pages/Filmes/FilmeDetalhe';
 import Pesquisa from './pages/Pesquisa/Pesquisa';
 import SerieDetalhe from './pages/Series/SerieDetalhe';
 import PessoaDetalhe from './pages/Pessoas/PessoaDetalhe';
+import AdicionarConteudo from './pages/Adicionar/AdicionarConteudo';
+import Login from './pages/Login/Login';
+import RequireAuth from './components/RequireAuth';
+import MeusPedidos from './pages/MeusPedidos/MeusPedidos';
+import EditarConteudo from './pages/EditarConteudo/EditarConteudo';
 
 function App() {
   return (
@@ -23,14 +28,46 @@ function App() {
         <div className='app-content'>
           <main className='app-main'>
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/filmes/:id' element={<FilmeDetalhe />} />
+              <Route path="/" element={<Home />} />
               <Route path="/pesquisa" element={<Pesquisa />} />
-              <Route path="/series/:id" element={<SerieDetalhe />} />
-              <Route path="/pessoas/:id" element={<PessoaDetalhe />} />
+
               <Route path="/filmes" element={<Filmes />} />
+              <Route path="/filmes/:id" element={<FilmeDetalhe />} />
+
               <Route path="/series" element={<Series />} />
+              <Route path="/series/:id" element={<SerieDetalhe />} />
+
               <Route path="/pessoas" element={<Pessoas />} />
+              <Route path="/pessoas/:id" element={<PessoaDetalhe />} />
+
+              <Route path="/login" element={<Login />} />
+
+              <Route
+                path="/adicionar/:tipo"
+                element={
+                  <RequireAuth>
+                    <AdicionarConteudo />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/meus-pedidos"
+                element={
+                  <RequireAuth>
+                    <MeusPedidos />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/editar-conteudo/:id"
+                element={
+                  <RequireAuth>
+                    <EditarConteudo />
+                  </RequireAuth>
+                }
+              />
             </Routes>
           </main>
 

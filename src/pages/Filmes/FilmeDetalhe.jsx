@@ -22,14 +22,14 @@ function FilmeDetalhe() {
                 const dados = await getFilmeDetalhe(id);
 
                 if (!dados) {
-                    setErro(t('noResults'));
+                    setErro(t('movieDetailsError'));
                     return;
                 }
 
                 setFilme(dados);
             } catch (error) {
                 console.error('Erro ao carregar detalhe do filme:', error);
-                setErro(t('noResults'));
+                setErro(t('movieDetailsError'));
             } finally {
                 setLoading(false);
             }
@@ -60,14 +60,6 @@ function FilmeDetalhe() {
         return (
             <div className="filme-detalhe-page">
                 <p className="filme-erro">{erro}</p>
-
-                <button
-                    type="button"
-                    className="filme-voltar-btn"
-                    onClick={() => navigate(-1)}
-                >
-                    {t('back')}
-                </button>
             </div>
         );
     }
@@ -84,6 +76,14 @@ function FilmeDetalhe() {
         ? new Date(filme.release_date).getFullYear()
         : '';
 
+    const duracao = filme.runtime
+        ? `${filme.runtime} ${t('minutes')}`
+        : t('unknownDuration');
+
+    const avaliacao = filme.vote_average
+        ? filme.vote_average.toFixed(1)
+        : 'N/A';
+
     const dataFormatada = filme.release_date
         ? new Date(filme.release_date).toLocaleDateString(locale, {
               day: 'numeric',
@@ -92,63 +92,74 @@ function FilmeDetalhe() {
           })
         : t('unknownDate');
 
-    const duracao = filme.runtime
-        ? `${Math.floor(filme.runtime / 60)}h ${filme.runtime % 60}min`
-        : t('unknownDuration');
+    const orcamento = filme.budget && filme.budget > 0
+        ? new Intl.NumberFormat(locale, {
+              style: 'currency',
+              currency: 'USD',
+              maximumFractionDigits: 0
+          }).format(filme.budget)
+        : t('unknownInfo');
 
-    const avaliacao = filme.vote_average
-        ? filme.vote_average.toFixed(1)
-        : 'N/A';
-
-    const generos =
-        filme.genres?.length > 0
-            ? filme.genres.map((genero) => genero.name).join(', ')
-            : t('unknownGenre');
-
-    const elenco = filme.credits?.cast?.slice(0, 10) || [];
+    const generos = filme.genres || [];
+    const elenco = filme.credits?.cast?.slice(0, 12) || [];
 
     return (
         <div className="filme-detalhe-page">
-            <button
-                type="button"
-                className="filme-voltar-btn"
-                onClick={() => navigate(-1)}
-            >
-                ← {t('back')}
-            </button>
-
-            <section className="filme-resumo">
+            <section className="filme-layout">
                 <div className="filme-poster-wrapper">
                     <img
                         src={poster}
-                        alt={`Poster de ${filme.title}`}
+                        alt={filme.title}
                         className="filme-poster"
                     />
                 </div>
 
-                <div className="filme-info-principal">
-                    <h1 className="filme-titulo">
+                <div className="filme-info">
+                    <button
+                        type="button"
+                        className="filme-voltar-btn"
+                        onClick={() => navigate(-1)}
+                    >
+                        ← {t('back')}
+                    </button>
+
+                    <h1>
                         {filme.title} {ano && <span>({ano})</span>}
                     </h1>
 
-                    <div className="filme-meta">
-                        <p><strong>{t('releaseDate')}:</strong> {dataFormatada}</p>
-                        <p><strong>{t('duration')}:</strong> {duracao}</p>
-                        <p><strong>{t('genres')}:</strong> {generos}</p>
-                        <p><strong>{t('tmdbRating')}:</strong> {avaliacao}/10</p>
+                    <div className="filme-generos">
+                        {generos.map((genero) => (
+                            <span key={genero.id}>{genero.name}</span>
+                        ))}
                     </div>
 
                     <div className="filme-sinopse">
                         <h2>{t('synopsis')}</h2>
+                        <p>{filme.overview || t('noSynopsisMovie')}</p>
+                    </div>
+
+                    <div className="filme-dados">
                         <p>
-                            {filme.overview || t('noSynopsisMovie')}
+                            <strong>{t('releaseDate')}:</strong> {dataFormatada}
+                        </p>
+
+                        <p>
+                            <strong>{t('duration')}:</strong> {duracao}
+                        </p>
+
+                        <p>
+                            <strong>{t('tmdbRating')}:</strong> ⭐ {avaliacao}/10
+                        </p>
+
+                        <p>
+                            <strong>{t('budget')}:</strong> {orcamento}
                         </p>
                     </div>
                 </div>
             </section>
 
             <section className="filme-section">
-                <h2>{t('actors')}</h2>
+                <h2>{t('mainCast')}</h2>
 
                 {elenco.length === 0 ? (
                     <p className="filme-status">{t('noCast')}</p>
@@ -182,10 +193,10 @@ function FilmeDetalhe() {
                 )}
             </section>
 
-            <section className="filme-section">
-                <h2>{t('trailer')}</h2>
+            {trailer && (
+                <section className="filme-section">
+                    <h2>{t('trailer')}</h2>
 
-                {trailer ? (
                     <div className="trailer-wrapper">
                         <iframe
                             src={`https://www.youtube.com/embed/${trailer.key}`}
@@ -194,10 +205,8 @@ function FilmeDetalhe() {
                             allowFullScreen
                         />
                     </div>
-                ) : (
-                    <p className="filme-status">{t('noTrailer')}</p>
-                )}
-            </section>
+                </section>
+            )}
         </div>
     );
 }

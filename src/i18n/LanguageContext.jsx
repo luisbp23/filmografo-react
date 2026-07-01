@@ -76,7 +76,46 @@ const translations = {
         trendingError: 'Não foi possível carregar as tendências neste momento.',
 
         // Footer
-        academicYear: 'TWAM - 2026'
+        academicYear: 'TWAM - 2026',
+
+        addContent: 'Adicionar conteúdo',
+        addMovie: 'Adicionar Filme',
+        addSeries: 'Adicionar Série',
+        addMovieTitle: 'Adicionar Filme',
+        addSeriesTitle: 'Adicionar Série',
+        addContentText: 'Esta página será usada para criar um pedido de adição de conteúdo ao Filmógrafo.',
+        filters: 'Filtros',
+        year: 'Ano',
+        resultsFor: 'Resultados para',
+        noSynopsisAvailable: 'Sem sinopse disponível.',
+        budget: 'Orçamento',
+        mainCast: 'Elenco Principal',
+        minutes: 'minutos',
+        login: 'Entrar',
+        register: 'Registar',
+        email: 'Email',
+        password: 'Palavra-passe',
+        username: 'Nome de utilizador',
+        goToRegister: 'Ainda não tens conta? Registar',
+        goToLogin: 'Já tens conta? Entrar',
+        registerSuccess: 'Conta criada com sucesso. Confirma o teu email ou inicia sessão.',
+        myRequests: 'Os meus pedidos',
+        sendRequest: 'Enviar pedido',
+        requestCreatedSuccess: 'Pedido enviado com sucesso.',
+        requestUpdatedSuccess: 'Pedido atualizado com sucesso.',
+        noRequests: 'Ainda não existem pedidos.',
+        contentTitle: 'Título',
+        genre: 'Género',
+        posterUrl: 'URL do poster',
+        type: 'Tipo',
+        editRequest: 'Editar pedido',
+        saveChanges: 'Guardar alterações',
+        onlyPendingCanBeEdited: 'Só é possível editar pedidos pendentes.',
+        pending: 'Pendente',
+        approved: 'Aprovado',
+        rejected: 'Rejeitado',
+
+        logout: 'Sair',
     },
 
     en: {
@@ -154,7 +193,48 @@ const translations = {
         trendingError: 'It was not possible to load trending content right now.',
 
         // Footer
-        academicYear: 'TWAM - 2026'
+        academicYear: 'TWAM - 2026',
+
+        addContent: 'Add content',
+        addMovie: 'Add Movie',
+        addSeries: 'Add Series',
+        addMovieTitle: 'Add Movie',
+        addSeriesTitle: 'Add Series',
+        addContentText: 'This page will be used to create a request to add content to Filmógrafo.',
+
+        filters: 'Filters',
+        year: 'Year',
+        resultsFor: 'Results for',
+        noSynopsisAvailable: 'No overview available.',
+        budget: 'Budget',
+        mainCast: 'Main Cast',
+        minutes: 'minutes',
+
+        login: 'Login',
+        register: 'Register',
+        email: 'Email',
+        password: 'Password',
+        username: 'Username',
+        goToRegister: "Don't have an account? Register",
+        goToLogin: 'Already have an account? Login',
+        registerSuccess: 'Account created successfully. Confirm your email or log in.',
+        myRequests: 'My requests',
+        sendRequest: 'Send request',
+        requestCreatedSuccess: 'Request sent successfully.',
+        requestUpdatedSuccess: 'Request updated successfully.',
+        noRequests: 'There are no requests yet.',
+        contentTitle: 'Title',
+        genre: 'Genre',
+        posterUrl: 'Poster URL',
+        type: 'Type',
+        editRequest: 'Edit request',
+        saveChanges: 'Save changes',
+        onlyPendingCanBeEdited: 'Only pending requests can be edited.',
+        pending: 'Pending',
+        approved: 'Approved',
+        rejected: 'Rejected',
+
+        logout: 'Logout',
     }
 };
 

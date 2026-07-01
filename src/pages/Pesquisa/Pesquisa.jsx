@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { pesquisarConteudo } from '../../services/tmdb';
-import './Pesquisa.css';
 import { useLanguage } from '../../i18n/LanguageContext';
+import './Pesquisa.css';
 
 function Pesquisa() {
     const location = useLocation();
@@ -10,6 +10,7 @@ function Pesquisa() {
 
     const [resultados, setResultados] = useState([]);
     const [tipoSelecionado, setTipoSelecionado] = useState('todos');
+    const [anoSelecionado, setAnoSelecionado] = useState('todos');
     const [loading, setLoading] = useState(false);
     const [erro, setErro] = useState('');
 
@@ -26,6 +27,7 @@ function Pesquisa() {
                 setLoading(true);
                 setErro('');
                 setTipoSelecionado('todos');
+                setAnoSelecionado('todos');
 
                 const dados = await pesquisarConteudo(query);
 
@@ -38,7 +40,7 @@ function Pesquisa() {
                 setResultados(dadosFiltrados);
             } catch (error) {
                 console.error('Erro ao pesquisar:', error);
-                setErro(t('noResults'));
+                setErro(t('searchError'));
             } finally {
                 setLoading(false);
             }
@@ -47,78 +49,124 @@ function Pesquisa() {
         carregarResultados();
     }, [query, language, t]);
 
-    const resultadosFiltrados = useMemo(() => {
-        if (tipoSelecionado === 'todos') {
-            return resultados;
+    function getAno(item) {
+        const data = item.release_date || item.first_air_date;
+
+        if (!data) {
+            return null;
         }
 
-        return resultados.filter((item) => item.media_type === tipoSelecionado);
-    }, [resultados, tipoSelecionado]);
+        return new Date(data).getFullYear();
+    }
+
+    const anosDisponiveis = useMemo(() => {
+        const anos = resultados
+            .map((item) => getAno(item))
+            .filter(Boolean);
+
+        return [...new Set(anos)].sort((a, b) => b - a);
+    }, [resultados]);
+
+    const resultadosFiltrados = useMemo(() => {
+        return resultados.filter((item) => {
+            const passaTipo =
+                tipoSelecionado === 'todos' ||
+                item.media_type === tipoSelecionado;
+
+            const anoItem = getAno(item);
+
+            const passaAno =
+                anoSelecionado === 'todos' ||
+                Number(anoSelecionado) === anoItem;
+
+            return passaTipo && passaAno;
+        });
+    }, [resultados, tipoSelecionado, anoSelecionado]);
 
     return (
         <div className="pesquisa-page">
-            <div className="pesquisa-header">
-                <h1>{t('searchResults')}</h1>
+            <aside className="pesquisa-sidebar">
+                <h2>{t('filters')}</h2>
 
-                <p>
-                    {t('searchFor')}: <strong>{query}</strong>
-                </p>
-            </div>
+                <div className="pesquisa-filtros-card">
+                    <button
+                        type="button"
+                        className={tipoSelecionado === 'todos' ? 'active' : ''}
+                        onClick={() => setTipoSelecionado('todos')}
+                    >
+                        {t('all')}
+                    </button>
 
-            <div className="pesquisa-filtros">
-                <button
-                    type="button"
-                    className={tipoSelecionado === 'todos' ? 'active' : ''}
-                    onClick={() => setTipoSelecionado('todos')}
-                >
-                    {t('all')}
-                </button>
+                    <button
+                        type="button"
+                        className={tipoSelecionado === 'movie' ? 'active' : ''}
+                        onClick={() => setTipoSelecionado('movie')}
+                    >
+                        {t('movies')}
+                    </button>
 
-                <button
-                    type="button"
-                    className={tipoSelecionado === 'movie' ? 'active' : ''}
-                    onClick={() => setTipoSelecionado('movie')}
-                >
-                    {t('movies')}
-                </button>
+                    <button
+                        type="button"
+                        className={tipoSelecionado === 'tv' ? 'active' : ''}
+                        onClick={() => setTipoSelecionado('tv')}
+                    >
+                        {t('series')}
+                    </button>
 
-                <button
-                    type="button"
-                    className={tipoSelecionado === 'tv' ? 'active' : ''}
-                    onClick={() => setTipoSelecionado('tv')}
-                >
-                    {t('series')}
-                </button>
+                    <button
+                        type="button"
+                        className={tipoSelecionado === 'person' ? 'active' : ''}
+                        onClick={() => setTipoSelecionado('person')}
+                    >
+                        {t('people')}
+                    </button>
 
-                <button
-                    type="button"
-                    className={tipoSelecionado === 'person' ? 'active' : ''}
-                    onClick={() => setTipoSelecionado('person')}
-                >
-                    {t('people')}
-                </button>
-            </div>
+                    <div className="pesquisa-filtro-linha" />
 
-            {loading && <p className="pesquisa-info">{t('loading')}</p>}
+                    <label htmlFor="ano">{t('year')}</label>
 
-            {erro && <p className="pesquisa-error">{erro}</p>}
+                    <select
+                        id="ano"
+                        value={anoSelecionado}
+                        onChange={(event) => setAnoSelecionado(event.target.value)}
+                    >
+                        <option value="todos">{t('all')}</option>
 
-            {!loading && !erro && resultadosFiltrados.length === 0 && (
-                <p className="pesquisa-info">{t('noResults')}</p>
-            )}
-
-            {!loading && !erro && resultadosFiltrados.length > 0 && (
-                <div className="pesquisa-resultados">
-                    {resultadosFiltrados.map((item) => (
-                        <ResultadoPesquisaCard
-                            key={`${item.media_type}-${item.id}`}
-                            item={item}
-                            t={t}
-                            locale={locale}
-                        />
-                    ))}
+                        {anosDisponiveis.map((ano) => (
+                            <option key={ano} value={ano}>
+                                {ano}
+                            </option>
+                        ))}
+                    </select>
                 </div>
-            )}
+            </aside>
+
+            <main className="pesquisa-conteudo">
+                <h1>
+                    {t('resultsFor')} <strong>"{query}"</strong>
+                </h1>
+
+                {loading && <p className="pesquisa-info">{t('loading')}</p>}
+
+                {erro && <p className="pesquisa-error">{erro}</p>}
+
+                {!loading && !erro && resultadosFiltrados.length === 0 && (
+                    <p className="pesquisa-info">{t('noResults')}</p>
+                )}
+
+                {!loading && !erro && resultadosFiltrados.length > 0 && (
+                    <div className="pesquisa-resultados">
+                        {resultadosFiltrados.map((item) => (
+                            <ResultadoPesquisaCard
+                                key={`${item.media_type}-${item.id}`}
+                                item={item}
+                                t={t}
+                                locale={locale}
+                            />
+                        ))}
+                    </div>
+                )}
+            </main>
         </div>
     );
 }
@@ -127,7 +175,11 @@ function ResultadoPesquisaCard({ item, t, locale }) {
     const tipo = item.media_type;
 
     const titulo = item.title || item.name || 'Sem título';
-    const descricao = item.overview || item.known_for_department || t('noResults');
+    const descricao =
+        item.overview ||
+        item.known_for_department ||
+        t('noSynopsisAvailable');
+
     const data = item.release_date || item.first_air_date || '';
     const imagem = item.poster_path || item.profile_path;
 

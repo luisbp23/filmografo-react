@@ -1,0 +1,24 @@
+.editar-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 32px 32px 56px 32px;
+}
+
+.editar-card {
+    background-color: var(--white);
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+}
+
+.editar-card h1 {
+    margin: 0 0 22px 0;
+    font-family: var(--font-title);
+    color: var(--secondary);
+}
+
+.editar-error {
+    color: crimson;
+    font-weight: 800;
+}

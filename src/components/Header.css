@@ -109,3 +109,183 @@
 .header-icons svg:hover {
     color: var(--highlight);
 }
+
+.add-menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.add-button {
+    border: none;
+    background: transparent;
+    color: var(--secondary);
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button:hover {
+    color: var(--highlight);
+}
+
+.add-dropdown {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    width: 210px;
+    background-color: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    padding: 10px;
+    z-index: 20;
+}
+
+.add-dropdown button {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: var(--dark-gray);
+    font-family: var(--font-text);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-dropdown button:hover {
+    background-color: rgba(106, 44, 112, 0.12);
+    color: var(--secondary);
+}
+
+.auth-button {
+    border: none;
+    background-color: transparent;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 800;
+    font-size: 15px;
+    padding: 6px 8px;
+    border-radius: 20px;
+}
+
+.auth-button:hover {
+    color: var(--highlight);
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.auth-button svg {
+    flex-shrink: 0;
+}
+
+.add-menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.add-button {
+    border: none;
+    background: transparent;
+    color: var(--secondary);
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button:hover {
+    color: var(--highlight);
+}
+
+.add-dropdown {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    width: 220px;
+    background-color: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    padding: 10px;
+    z-index: 50;
+}
+
+.add-dropdown button {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: var(--dark-gray);
+    font-family: var(--font-text);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-dropdown button:hover {
+    background-color: rgba(106, 44, 112, 0.12);
+    color: var(--secondary);
+}
+
+.user-menu-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon-button {
+    border: none;
+    background-color: transparent;
+    color: var(--secondary);
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-icon-button:hover {
+    color: var(--highlight);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    width: 210px;
+    background-color: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    padding: 10px;
+    z-index: 50;
+}
+
+.user-dropdown button {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: var(--dark-gray);
+    font-family: var(--font-text);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.user-dropdown button:hover {
+    background-color: rgba(106, 44, 112, 0.12);
+    color: var(--secondary);
+}

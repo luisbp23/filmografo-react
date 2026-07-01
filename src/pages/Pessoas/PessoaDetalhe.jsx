@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getPessoaDetalhe } from '../../services/tmdb';
+import { useLanguage } from '../../i18n/LanguageContext';
 import './PessoaDetalhe.css';
 
 function PessoaDetalhe() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { t, language, locale } = useLanguage();
 
     const [pessoa, setPessoa] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -20,21 +22,21 @@ function PessoaDetalhe() {
                 const dados = await getPessoaDetalhe(id);
 
                 if (!dados) {
-                    setErro('Não foi possível carregar os detalhes desta pessoa.');
+                    setErro(t('personDetailsError'));
                     return;
                 }
 
                 setPessoa(dados);
             } catch (error) {
                 console.error('Erro ao carregar detalhe da pessoa:', error);
-                setErro('Não foi possível carregar os detalhes desta pessoa.');
+                setErro(t('personDetailsError'));
             } finally {
                 setLoading(false);
             }
         }
 
         carregarPessoa();
-    }, [id]);
+    }, [id, language, t]);
 
     const trabalhosConhecidos = useMemo(() => {
         if (!pessoa?.combined_credits?.cast) {
@@ -50,7 +52,7 @@ function PessoaDetalhe() {
     if (loading) {
         return (
             <div className="pessoa-detalhe-page">
-                <p className="pessoa-status">A carregar detalhes da pessoa...</p>
+                <p className="pessoa-status">{t('loading')}</p>
             </div>
         );
     }
@@ -65,7 +67,7 @@ function PessoaDetalhe() {
                     className="pessoa-voltar-btn"
                     onClick={() => navigate(-1)}
                 >
-                    Voltar
+                    {t('back')}
                 </button>
             </div>
         );
@@ -80,22 +82,22 @@ function PessoaDetalhe() {
         : '/flogo.png';
 
     const nascimento = pessoa.birthday
-        ? new Date(pessoa.birthday).toLocaleDateString('pt-PT', {
+        ? new Date(pessoa.birthday).toLocaleDateString(locale, {
               day: 'numeric',
               month: 'long',
               year: 'numeric'
           })
-        : 'Data desconhecida';
+        : t('unknownDate');
 
     const morte = pessoa.deathday
-        ? new Date(pessoa.deathday).toLocaleDateString('pt-PT', {
+        ? new Date(pessoa.deathday).toLocaleDateString(locale, {
               day: 'numeric',
               month: 'long',
               year: 'numeric'
           })
         : null;
 
-    const localNascimento = pessoa.place_of_birth || 'Local desconhecido';
+    const localNascimento = pessoa.place_of_birth || t('unknownPlace');
 
     return (
         <div className="pessoa-detalhe-page">
@@ -104,14 +106,14 @@ function PessoaDetalhe() {
                 className="pessoa-voltar-btn"
                 onClick={() => navigate(-1)}
             >
-                ← Voltar
+                ← {t('back')}
             </button>
 
             <section className="pessoa-resumo">
                 <div className="pessoa-foto-wrapper">
                     <img
                         src={fotografia}
-                        alt={`Fotografia de ${pessoa.name}`}
+                        alt={pessoa.name}
                         className="pessoa-foto"
                     />
                 </div>
@@ -121,49 +123,47 @@ function PessoaDetalhe() {
 
                     <div className="pessoa-meta">
                         <p>
-                            <strong>Conhecido por:</strong>{' '}
-                            {pessoa.known_for_department || 'Informação desconhecida'}
+                            <strong>{t('knownFor')}:</strong>{' '}
+                            {pessoa.known_for_department || t('unknownInfo')}
                         </p>
 
                         <p>
-                            <strong>Data de nascimento:</strong> {nascimento}
+                            <strong>{t('birthDate')}:</strong> {nascimento}
                         </p>
 
                         {morte && (
                             <p>
-                                <strong>Data de falecimento:</strong> {morte}
+                                <strong>{t('deathDate')}:</strong> {morte}
                             </p>
                         )}
 
                         <p>
-                            <strong>Local de nascimento:</strong> {localNascimento}
+                            <strong>{t('birthPlace')}:</strong> {localNascimento}
                         </p>
                     </div>
 
                     <div className="pessoa-biografia">
-                        <h2>Biografia</h2>
+                        <h2>{t('biography')}</h2>
 
                         <p>
-                            {pessoa.biography ||
-                                'Ainda não existe biografia disponível para esta pessoa.'}
+                            {pessoa.biography || t('noBiography')}
                         </p>
                     </div>
                 </div>
             </section>
 
             <section className="pessoa-section">
-                <h2>Conhecido por</h2>
+                <h2>{t('knownFor')}</h2>
 
                 {trabalhosConhecidos.length === 0 ? (
-                    <p className="pessoa-status">
-                        Não existem filmes ou séries disponíveis.
-                    </p>
+                    <p className="pessoa-status">{t('noKnownWorks')}</p>
                 ) : (
                     <div className="trabalhos-horizontal">
                         {trabalhosConhecidos.map((trabalho) => (
                             <TrabalhoCard
                                 key={`${trabalho.media_type}-${trabalho.id}`}
                                 trabalho={trabalho}
+                                locale={locale}
                             />
                         ))}
                     </div>
@@ -173,10 +173,10 @@ function PessoaDetalhe() {
     );
 }
 
-function TrabalhoCard({ trabalho }) {
+function TrabalhoCard({ trabalho, locale }) {
     const titulo = trabalho.title || trabalho.name || 'Sem título';
     const data = trabalho.release_date || trabalho.first_air_date || '';
-    const ano = data ? new Date(data).getFullYear() : 'Ano desconhecido';
+    const ano = data ? new Date(data).getFullYear() : '';
 
     const imagem = trabalho.poster_path
         ? `https://image.tmdb.org/t/p/w185${trabalho.poster_path}`
@@ -199,7 +199,8 @@ function TrabalhoCard({ trabalho }) {
 
             <div className="trabalho-info">
                 <h3>{titulo}</h3>
-                <p>{ano}</p>
+
+                {ano && <p>{ano}</p>}
             </div>
         </Link>
     );

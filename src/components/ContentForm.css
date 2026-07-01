@@ -1,0 +1,92 @@
+.content-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.content-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 800;
+    color: var(--dark-gray);
+}
+
+.content-form input,
+.content-form textarea {
+    border: 1px solid rgba(57, 57, 57, 0.25);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: var(--font-text);
+    font-size: 15px;
+}
+
+.content-form input[type="file"] {
+    background-color: var(--white);
+    cursor: pointer;
+}
+
+.content-form textarea {
+    resize: vertical;
+}
+
+.content-form-help {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(57, 57, 57, 0.7);
+}
+
+.content-form-error {
+    margin: 0;
+    color: crimson;
+    font-weight: 800;
+}
+
+.content-form-preview {
+    width: 170px;
+}
+
+.content-form-preview p {
+    margin: 0 0 8px 0;
+    font-weight: 800;
+    color: var(--dark-gray);
+}
+
+.content-form-preview img {
+    width: 170px;
+    min-height: 120px;
+    max-height: 255px;
+    object-fit: cover;
+    border-radius: 12px;
+    background-color: #eeeeee;
+    border: 1px solid rgba(57, 57, 57, 0.16);
+}
+
+.content-form-submit {
+    align-self: flex-start;
+    border: none;
+    background-color: var(--primary);
+    color: var(--highlight);
+    border-radius: 24px;
+    padding: 12px 22px;
+    font-family: var(--font-text);
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.content-form-submit:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+@media (max-width: 800px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
