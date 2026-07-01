@@ -1,0 +1,87 @@
+.denuncia-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 30, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    padding: 1rem;
+}
+
+.denuncia-modal {
+    background: #e8e8ea;
+    border-radius: 16px;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.denuncia-modal h3 {
+    color: var(--secondary);
+}
+
+.denuncia-modal .btn-close {
+    filter: none;
+    opacity: 0.6;
+}
+
+.denuncia-modal .btn-close:hover {
+    opacity: 1;
+}
+
+.denuncia-form .form-label {
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.denuncia-form .form-select,
+.denuncia-form .form-control {
+    border: 1px solid #d5d5da;
+    border-radius: 8px;
+    color: var(--dark-gray);
+}
+
+.denuncia-form .form-select::placeholder,
+.denuncia-form .form-control::placeholder {
+    color: var(--dark-gray);
+    opacity: 0.6;
+}
+
+.denuncia-form .form-select:focus,
+.denuncia-form .form-control:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 0.2rem rgba(240, 121, 77, 0.25);
+}
+
+.denuncia-form .btn-primary,
+.denuncia-form .btn-danger {
+    background: var(--secondary);
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.denuncia-form .btn-primary:hover,
+.denuncia-form .btn-danger:hover {
+    background: var(--primary);
+    color: var(--highlight);
+}
+
+.denuncia-form .btn-secondary {
+    background: white;
+    border: 1px solid #c9c9d0;
+    border-radius: 999px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.denuncia-form .btn-secondary:hover {
+    background: #d9d9de;
+}

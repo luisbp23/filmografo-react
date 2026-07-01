@@ -42,6 +42,7 @@
     min-width: 50px;
     border-radius: 50%;
     border: 2px solid var(--dark-gray);
+    background-color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
