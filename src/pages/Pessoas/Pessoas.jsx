@@ -27,6 +27,8 @@ function Pessoas() {
 
             {loading ? (
                 <p className="catalogo-status">{t('loading')}</p>
+            ) : pessoas.length === 0 ? (
+                <p className="catalogo-status">{t('noResults')}</p>
             ) : (
                 <div className="catalogo-grid">
                     {pessoas.map((pessoa) => (

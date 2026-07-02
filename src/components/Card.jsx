@@ -2,7 +2,7 @@ import './Card.css';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 
-function Card({ id, titulo, imagem, date, link, subtitulo }) {
+function Card({ id, titulo, imagem, date, tipo, link, subtitulo }) {
     const { locale } = useLanguage();
 
     const dataValida = date && !Number.isNaN(new Date(date).getTime());
@@ -15,9 +15,15 @@ function Card({ id, titulo, imagem, date, link, subtitulo }) {
           })
         : null;
 
+    const destino = link
+        ? link
+        : tipo
+            ? `/comunidade/${tipo}/${id}`
+            : `/filmes/${id}`;
+
     return (
         <article className="movie-card">
-            <Link to={link || `/filmes/${id}`} className="movie-card-link">
+            <Link to={destino} className="movie-card-link">
                 <div className="movie-card-image-wrapper">
                     <img
                         src={imagem}

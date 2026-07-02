@@ -1,15 +1,27 @@
 import './ReviewCard.css';
 import ReportForm from './ReportForm';
 import { useState } from 'react';
+import { denunciarReview } from '../services/reportService';
 
-function ReviewCard({ id, titulo, autor, texto, nota, onDenunciar }) {
+function ReviewCard({ id, titulo, autor, texto, nota }) {
     const [denunciaAberta, setDenunciaAberta] = useState(false);
  
     async function handleDenunciaSubmit(dados) {
-        if (onDenunciar) {
-            await onDenunciar({ reviewId: id, ...dados });
+        try {
+            // chama a funcao do reportService passando o id da review e os dados do form
+            const { error } = await denunciarReview(id, dados.motivo, dados.descricao);
+            
+            if (error) {
+                alert('Erro ao enviar denúncia: ' + error);
+            } else {
+                alert('Denúncia enviada com sucesso. Obrigado.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Ocorreu um erro ao denunciar.');
+        } finally {
+            setDenunciaAberta(false);
         }
-        setDenunciaAberta(false);
     }
 
     return (

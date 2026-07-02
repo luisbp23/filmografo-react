@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSerieDetalhe } from '../../services/tmdb';
+import { getReviewsByContent, calcularMedia } from '../../services/reviewService'; // ← adiciona
 import { useLanguage } from '../../i18n/LanguageContext';
 import './SerieDetalhe.css';
 import ReviewForm from '../../components/ReviewForm';
@@ -15,19 +16,19 @@ function SerieDetalhe() {
     const [loading, setLoading] = useState(true);
     const [erro, setErro] = useState('');
 
+    const [reviews, setReviews] = useState([]);
+    const [media, setMedia] = useState(0);
+
     useEffect(() => {
         async function carregarSerie() {
             try {
                 setLoading(true);
                 setErro('');
-
                 const dados = await getSerieDetalhe(id);
-
                 if (!dados) {
                     setErro(t('seriesDetailsError'));
                     return;
                 }
-
                 setSerie(dados);
             } catch (error) {
                 console.error('Erro ao carregar detalhe da série:', error);
@@ -36,23 +37,25 @@ function SerieDetalhe() {
                 setLoading(false);
             }
         }
-
         carregarSerie();
     }, [id, language, t]);
 
-    const trailer = useMemo(() => {
-        if (!serie?.videos?.results) {
-            return null;
-        }
+    const carregarReviews = useCallback(async () => {
+        const dados = await getReviewsByContent(id, 'tv');
+        setReviews(dados);
+        setMedia(calcularMedia(dados));
+    }, [id]);
 
+    useEffect(() => {
+        if (id) { carregarReviews(); }
+    }, [id, carregarReviews]);
+
+    const trailer = useMemo(() => {
+        if (!serie?.videos?.results) return null;
         return serie.videos.results.find(
             (video) => video.site === 'YouTube' && video.type === 'Trailer'
         );
     }, [serie]);
-
-    function enviarCritica(dados) {
-        console.log(dados);
-    }
 
     if (loading) {
         return (
@@ -66,21 +69,14 @@ function SerieDetalhe() {
         return (
             <div className="serie-detalhe-page">
                 <p className="serie-erro">{erro}</p>
-
-                <button
-                    type="button"
-                    className="serie-voltar-btn"
-                    onClick={() => navigate(-1)}
-                >
+                <button type="button" className="serie-voltar-btn" onClick={() => navigate(-1)}>
                     ← {t('back')}
                 </button>
             </div>
         );
     }
 
-    if (!serie) {
-        return null;
-    }
+    if (!serie) return null;
 
     const poster = serie.poster_path
         ? `https://image.tmdb.org/t/p/w500${serie.poster_path}`
@@ -92,9 +88,7 @@ function SerieDetalhe() {
 
     const dataFormatada = serie.first_air_date
         ? new Date(serie.first_air_date).toLocaleDateString(locale, {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
+              day: 'numeric', month: 'long', year: 'numeric'
           })
         : t('unknownDate');
 
@@ -109,25 +103,15 @@ function SerieDetalhe() {
         <div className="serie-detalhe-page">
             <section className="serie-layout">
                 <div className="serie-poster-wrapper">
-                    <img
-                        src={poster}
-                        alt={serie.name}
-                        className="serie-poster"
-                    />
+                    <img src={poster} alt={serie.name} className="serie-poster" />
                 </div>
 
                 <div className="serie-info">
-                    <button
-                        type="button"
-                        className="serie-voltar-btn"
-                        onClick={() => navigate(-1)}
-                    >
+                    <button type="button" className="serie-voltar-btn" onClick={() => navigate(-1)}>
                         ← {t('back')}
                     </button>
 
-                    <h1>
-                        {serie.name} {ano && <span>({ano})</span>}
-                    </h1>
+                    <h1>{serie.name} {ano && <span>({ano})</span>}</h1>
 
                     <div className="serie-generos">
                         {generos.map((genero) => (
@@ -141,54 +125,32 @@ function SerieDetalhe() {
                     </div>
 
                     <div className="serie-dados">
-                        <p>
-                            <strong>{t('firstAirDate')}:</strong> {dataFormatada}
-                        </p>
-
-                        <p>
-                            <strong>{t('status')}:</strong> {serie.status || t('unknownInfo')}
-                        </p>
-
-                        <p>
-                            <strong>{t('seasons')}:</strong> {serie.number_of_seasons || 0}
-                        </p>
-
-                        <p>
-                            <strong>{t('episodes')}:</strong> {serie.number_of_episodes || 0}
-                        </p>
-
-                        <p>
-                            <strong>{t('tmdbRating')}:</strong> ⭐ {avaliacao}/10
-                        </p>
+                        <p><strong>{t('firstAirDate')}:</strong> {dataFormatada}</p>
+                        <p><strong>{t('status')}:</strong> {serie.status || t('unknownInfo')}</p>
+                        <p><strong>{t('seasons')}:</strong> {serie.number_of_seasons || 0}</p>
+                        <p><strong>{t('episodes')}:</strong> {serie.number_of_episodes || 0}</p>
+                        <p><strong>{t('tmdbRating')}:</strong> ⭐ {avaliacao}/10</p>
                     </div>
                 </div>
             </section>
 
             <section className="serie-section">
                 <h2>{t('mainCast')}</h2>
-
                 {elenco.length === 0 ? (
                     <p className="serie-status">{t('noCast')}</p>
                 ) : (
                     <div className="elenco-horizontal">
                         {elenco.map((ator) => (
-                            <Link
-                                to={`/pessoas/${ator.id}`}
-                                className="ator-card-horizontal"
-                                key={ator.id}
-                            >
+                            <Link to={`/pessoas/${ator.id}`} className="ator-card-horizontal" key={ator.id}>
                                 <div className="ator-foto-wrapper-horizontal">
                                     <img
-                                        src={
-                                            ator.profile_path
-                                                ? `https://image.tmdb.org/t/p/w185${ator.profile_path}`
-                                                : '/flogo.png'
-                                        }
+                                        src={ator.profile_path
+                                            ? `https://image.tmdb.org/t/p/w185${ator.profile_path}`
+                                            : '/flogo.png'}
                                         alt={ator.name}
                                         className="ator-foto-horizontal"
                                     />
                                 </div>
-
                                 <div className="ator-info-horizontal">
                                     <h3>{ator.name}</h3>
                                     <p>{ator.character || '—'}</p>
@@ -201,7 +163,6 @@ function SerieDetalhe() {
 
             <section className="serie-section">
                 <h2>{t('trailer')}</h2>
-
                 {trailer ? (
                     <div className="trailer-wrapper">
                         <iframe
@@ -216,19 +177,39 @@ function SerieDetalhe() {
                 )}
             </section>
 
+            {/* seccao de reviews */}
             <section className="reviews-section">
                 <h2>Avaliações</h2>
 
-                <ReviewForm onSubmit={enviarCritica} />
+                {/* media so aparece se houver reviews */}
+                {reviews.length > 0 && (
+                    <div className="d-flex align-items-center gap-3 mb-3">
+                        <div className="circulo-media">{media}</div>
+                        <p className="mb-0">{reviews.length} críticas</p>
+                    </div>
+                )}
+
+                <ReviewForm
+                    contentId={id}
+                    contentType="tv"
+                    onReviewAdicionada={carregarReviews}
+                />
 
                 <h3 className="user-aval">Avaliações dos Utilizadores</h3>
-
-                <ReviewCard
-                    titulo="Um clássico absoluto"
-                    autor="joaosilva22"
-                    texto="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    nota={8}
-                />
+                {reviews.length === 0 ? (
+                    <p>Ainda não há críticas.</p>
+                ) : (
+                    reviews.map(r => (
+                        <ReviewCard
+                            key={r.id}
+                            id={r.id}
+                            titulo={r.title}
+                            autor={r.profiles?.username ?? 'Anónimo'}
+                            texto={r.text}
+                            nota={r.aval}
+                        />
+                    ))
+                )}
             </section>
         </div>
     );

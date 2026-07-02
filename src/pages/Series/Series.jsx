@@ -27,6 +27,8 @@ function Series() {
 
             {loading ? (
                 <p className="catalogo-status">{t('loading')}</p>
+            ) : series.length === 0 ? (
+                <p className="catalogo-status">{t('noResults')}</p>
             ) : (
                 <div className="catalogo-grid">
                     {series.map((serie) => (

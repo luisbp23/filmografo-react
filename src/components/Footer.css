@@ -2,6 +2,12 @@
     background-color: var(--primary);
     width: 100%;
     color: var(--white);
+    gap: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
 }
 
 .logo-normal {

@@ -16,6 +16,8 @@ import Login from './pages/Login/Login';
 import RequireAuth from './components/RequireAuth';
 import MeusPedidos from './pages/MeusPedidos/MeusPedidos';
 import EditarConteudo from './pages/EditarConteudo/EditarConteudo';
+import AdminPanel from './pages/AdminPanel';
+import ComunidadeDetalhe from './pages/ComunidadeDetalhe'
 
 function App() {
   return (
@@ -68,6 +70,18 @@ function App() {
                   </RequireAuth>
                 }
               />
+
+              <Route 
+                path='/admin'
+                element={
+                  <RequireAuth>
+                    <AdminPanel />
+                  </RequireAuth>
+                }
+              />
+
+              <Route path="/comunidade/:tipo/:id" element={<ComunidadeDetalhe />} />
+
             </Routes>
           </main>
 

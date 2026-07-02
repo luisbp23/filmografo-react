@@ -1,0 +1,134 @@
+.admin-panel {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.admin-panel h1 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Abas */
+.admin-abas {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+}
+
+.admin-aba {
+    background: none;
+    border: none;
+    font-family: var(--font-text);
+    font-size: 1rem;
+    padding: 8px 20px;
+    cursor: pointer;
+    color: var(--dark-gray);
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-aba.active {
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 3px solid var(--primary);
+}
+
+.admin-badge {
+    background-color: var(--secondary);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cards */
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.admin-card-info {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+}
+
+.admin-card-img {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.admin-card-info h3 {
+    margin: 0 0 8px 0;
+    color: var(--primary);
+}
+
+.admin-card-info p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.admin-card-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-aprovar {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 600;
+}
+
+.btn-aprovar:hover {
+    background-color: var(--primary);
+    color: var(--highlight);
+}
+
+.btn-rejeitar {
+    background-color: transparent;
+    color: var(--dark-gray);
+    border: 2px solid var(--dark-gray);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 600;
+}
+
+.btn-rejeitar:hover {
+    background-color: var(--dark-gray);
+    color: white;
+}
+
+.admin-vazio {
+    color: var(--dark-gray);
+    opacity: 0.6;
+    text-align: center;
+    padding: 2rem;
+}

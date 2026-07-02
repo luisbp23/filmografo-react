@@ -1,0 +1,72 @@
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 30, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1060;
+    padding: 1rem;
+}
+
+.confirm-modal {
+    background: #e8e8ea;
+    border-radius: 16px;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.confirm-modal h3 {
+    color: var(--secondary);
+    margin-bottom: 0.75rem;
+}
+
+.confirm-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+.confirm-acoes button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 600;
+}
+
+.confirm-cancelar {
+    background-color: transparent;
+    color: var(--dark-gray);
+    border: 2px solid var(--dark-gray);
+}
+
+.confirm-cancelar:hover {
+    background-color: var(--dark-gray);
+    color: white;
+}
+
+.confirm-confirmar {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+}
+
+.confirm-confirmar:hover {
+    background-color: var(--primary);
+    color: var(--highlight);
+}
+
+.confirm-confirmar.confirm-perigo {
+    background-color: transparent;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+}
+
+.confirm-confirmar.confirm-perigo:hover {
+    background-color: #dc3545;
+    color: white;
+}

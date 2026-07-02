@@ -4,15 +4,18 @@ import { supabase } from '../../services/supabaseClient';
 import { useLanguage } from '../../i18n/LanguageContext';
 import './Login.css';
 
+function toFakeEmail(username) {
+    return `${username.toLowerCase().trim()}@filmografo.com`;
+}
+
 function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useLanguage();
 
     const [modo, setModo] = useState('login');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [mensagem, setMensagem] = useState('');
     const [erro, setErro] = useState('');
@@ -21,38 +24,30 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-
         setLoading(true);
         setErro('');
         setMensagem('');
 
+        const fakeEmail = toFakeEmail(username);
+
         try {
             if (modo === 'register') {
                 const { error } = await supabase.auth.signUp({
-                    email,
+                    email: fakeEmail,
                     password,
                     options: {
-                        data: {
-                            username
-                        }
+                        data: { username }
                     }
                 });
-
-                if (error) {
-                    throw error;
-                }
-
+                if (error) throw error;
                 setMensagem(t('registerSuccess'));
+
             } else {
                 const { error } = await supabase.auth.signInWithPassword({
-                    email,
+                    email: fakeEmail,
                     password
                 });
-
-                if (error) {
-                    throw error;
-                }
-
+                if (error) throw error;
                 navigate(voltarPara);
             }
         } catch (error) {
@@ -70,24 +65,12 @@ function Login() {
                 </h1>
 
                 <form onSubmit={handleSubmit} className="login-form">
-                    {modo === 'register' && (
-                        <label>
-                            {t('username')}
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(event) => setUsername(event.target.value)}
-                                required
-                            />
-                        </label>
-                    )}
-
                     <label>
-                        {t('email')}
+                        {t('username')}
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                     </label>
@@ -97,7 +80,7 @@ function Login() {
                         <input
                             type="password"
                             value={password}
-                            onChange={(event) => setPassword(event.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             minLength={6}
                         />
@@ -120,9 +103,7 @@ function Login() {
                     className="login-mode-btn"
                     onClick={() => setModo(modo === 'login' ? 'register' : 'login')}
                 >
-                    {modo === 'login'
-                        ? t('goToRegister')
-                        : t('goToLogin')}
+                    {modo === 'login' ? t('goToRegister') : t('goToLogin')}
                 </button>
             </section>
         </div>

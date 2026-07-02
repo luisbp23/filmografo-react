@@ -27,6 +27,8 @@ function Filmes() {
 
             {loading ? (
                 <p className="catalogo-status">{t('loading')}</p>
+            ) : filmes.length === 0 ? (
+                <p className="catalogo-status">{t('noResults')}</p>
             ) : (
                 <div className="catalogo-grid">
                     {filmes.map((filme) => (

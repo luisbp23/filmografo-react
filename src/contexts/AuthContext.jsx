@@ -6,7 +6,17 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
     const [session, setSession] = useState(null);
     const [user, setUser] = useState(null);
+    const [profile, setProfile] = useState(null); 
     const [loading, setLoading] = useState(true);
+
+    async function carregarPerfil(userId) {
+        const { data } = await supabase
+            .from('profiles')
+            .select('username, role')
+            .eq('id', userId)
+            .single();
+        setProfile(data ?? null);
+    }
 
     useEffect(() => {
         async function carregarSessao() {
@@ -15,6 +25,11 @@ export function AuthProvider({ children }) {
             if (!error) {
                 setSession(data.session);
                 setUser(data.session?.user || null);
+
+                // busca o perfil se houver sessao
+                if (data.session?.user) {
+                    await carregarPerfil(data.session.user.id);
+                }
             }
 
             setLoading(false);
@@ -23,9 +38,16 @@ export function AuthProvider({ children }) {
         carregarSessao();
 
         const { data: listener } = supabase.auth.onAuthStateChange(
-            (_event, novaSessao) => {
+            async (_event, novaSessao) => {
                 setSession(novaSessao);
                 setUser(novaSessao?.user || null);
+
+                // ← atualiza o perfil quando a sessão muda
+                if (novaSessao?.user) {
+                    await carregarPerfil(novaSessao.user.id);
+                } else {
+                    setProfile(null); // limpa o perfil ao fazer logout
+                }
             }
         );
 
@@ -38,16 +60,18 @@ export function AuthProvider({ children }) {
         await supabase.auth.signOut();
         setSession(null);
         setUser(null);
+        setProfile(null);
     }
 
     const value = useMemo(() => {
         return {
             session,
             user,
+            profile,
             loading,
             signOut
         };
-    }, [session, user, loading]);
+    }, [session, user, profile, loading]); // adiciona profile as dependencias
 
     return (
         <AuthContext.Provider value={value}>

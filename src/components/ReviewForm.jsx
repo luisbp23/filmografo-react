@@ -1,22 +1,45 @@
 import './ReviewForm.css';
 import { useState } from 'react';
+import { adicionarReview } from '../services/reviewService';
 
-function ReviewForm({ onSubmit }) {
+function ReviewForm({ contentId, contentType, onReviewAdicionada }) {
     const [titulo, setTitulo] = useState('');
     const [nota, setNota] = useState(5);
     const [comentario, setComentario] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [erro, setErro] = useState('');
+    const [sucesso, setSucesso] = useState('');
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        onSubmit({ titulo, nota, comentario });
-        setTitulo('');
-        setNota(5);
-        setComentario('');
+        setLoading(true);
+        setErro('');
+        setSucesso('');
+
+        try {
+            await adicionarReview(titulo, nota, comentario, contentId, contentType);
+            
+            // limpa o formulario
+            setTitulo('');
+            setNota(5);
+            setComentario('');
+            
+            // chama esta prop para que o componente pai recarregue as reviews, se necessario
+            if (onReviewAdicionada) onReviewAdicionada(); 
+            
+            setSucesso('Avaliação submetida com sucesso!');
+        } catch (error) {
+            setErro(error.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
         <form onSubmit={handleSubmit} className="review-form">
             <h3>Sua avaliação</h3>
+            {erro && <p role="alert" style={{color: 'red'}}>{erro}</p>}
+            {sucesso && <p role="status" style={{color: 'green'}}>{sucesso}</p>}
 
             {/* titulo */}
             <div className="mb-3">
@@ -65,7 +88,9 @@ function ReviewForm({ onSubmit }) {
             </div>
 
             <div className="text-end mt-3">
-                <button type="submit" className="btn btn-primary">Submeter</button>
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? 'A submeter...' : 'Submeter'}
+                </button>
             </div>
         </form>
     )
